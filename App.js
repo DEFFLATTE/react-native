@@ -1,106 +1,28 @@
 import React, {Component} from 'react';
-import {Text,View,StyleSheet,TextInput, TouchableOpacity } from 'react-native';
+import {createAppContainer} from 'react-navigation';
+import {createStackNavigator} from 'react-navigation-stack';
+import BottomNavigator from './page/root/rootPage';
+import BriefPage from './page/brief/briefPage';
+import ImgPage from './page/brief/imgPage';
+import ListPage from './page/cate/listPage';
 
-class Inputs extends Component{
-    state:{
-        email:'',
-        password:'',
-        intro:''
-    }
-    handleEmail = (text) =>{
-        this.setState({email:text})
-    }
-    handlePassword = (text) => {
-        this.setState({password:text})
-    }
-    handleIntro = (text) => {
-        this.setState({intro:text})
-    }
-    register = (email,pass,intro) =>{
-        alert(`email:${email}\npassword:${pass}\nintro:${intro}`)
-    }
-    render(){
-        return (
-            <View style={styles.container}>
-                <TextInput
-                    style = {styles.input}
-                    /*下划线的颜色，透明则为transparent*/
-                    underlineColorAndroid = "transparent"
-                    /*占位符*/
-                    placeholder = "请输入邮箱"
-                    /*    占位符的字体颜色*/
-                    placeholderTextColor = '#ccc'
-                    /*    字母大写模式，可选的值有"default","number-pad","decimal-pad","numeric","email-address","phone-pad"*/
-                    autoCapitalize = "none"
-                    /*    键盘上返回键类型，可选的值有:"done","go","next","search","send"*/
-                    returnKeyType = "next"
-                    /*    文本变更后的回调函数，参数为输入框里的文本*/
-                    onChangeText = {this.handleEmail}
-                ></TextInput>
-
-                <TextInput
-                    style = {styles.input}
-                    /*下划线的颜色，透明则为transparent*/
-                    underlineColorAndroid = "transparent"
-                    /*占位符*/
-                    placeholder = "请输入密码"
-                    /*    占位符的字体颜色*/
-                    placeholderTextColor = '#ccc'
-                    /*    字母大写模式，可选的值有"default","number-pad","decimal-pad","numeric","email-address","phone-pad"*/
-                    autoCapitalize = "none"
-                    /*    键盘上返回键类型，可选的值有:"done","go","next","search","send"*/
-                    returnKeyType = "next"
-                    /*    文本变更后的回调函数，参数为输入框里的文本*/
-                    //是否属于密码框类型
-                    secureTextEntry = {true}
-                    onChangeText = {this.handlePassword}
-                ></TextInput>
-
-                <TextInput
-                    style = {styles.input}
-                    /*下划线的颜色，透明则为transparent*/
-                    underlineColorAndroid = "transparent"
-                    /*占位符*/
-                    placeholder = "请输入描述"
-                    /*    占位符的字体颜色*/
-                    placeholderTextColor = '#ccc'
-                    /*    字母大写模式，可选的值有"default","number-pad","decimal-pad","numeric","email-address","phone-pad"*/
-                    autoCapitalize = "none"
-                    /*    键盘上返回键类型，可选的值有:"done","go","next","search","send"*/
-                    returnKeyType = "next"
-                    /*    文本变更后的回调函数，参数为输入框里的文本*/
-                    //多行设置
-                    mutiline = {true}
-                    //行数
-                    numberOfLines = {4}
-                    //文字的位置靠上
-                    textAlignVertical="top"
-                    onChangeText = {this.handleIntro}
-                ></TextInput>
-
-                <TouchableOpacity
-                    style={styles.submitButton}
-                    onPress = {
-                        ()=> this.register(this.state.email,this.state.password,this.state.intro)
-                    }>
-                    <Text style={styles.submitButtonText}>注册</Text>
-                </TouchableOpacity>
-
-            </View>
-        )
-    }
-}
-const styles = StyleSheet.create({
-    input:{
-
+//设置react-native路由导航
+const AppStack = createStackNavigator(
+    {
+        BottomNavigator: {
+            screen:BottomNavigator,
+            navigationOptions: {
+                headerShown: false,
+            },
+        },
+        Brief: {screen: BriefPage},
+        ImgPage: {screen: ImgPage},
+        ListPage: {screen: ListPage},
     },
-    submitButton:{
-
+    {
+        mode: 'modal',
+        headerMode: 'none',
     },
-    submitButtonText:{
+);
 
-    }
-})
-export default Inputs
-
-
+export default createAppContainer(AppStack)
